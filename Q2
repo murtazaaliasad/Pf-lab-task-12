@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void reverseString(char *str) {
+    int length = strlen(str);
+    int i, j;
+    char temp;
+
+    for (i = 0, j = length - 1; i < j; i++, j--) {
+        temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+    }
+}
+
+int main() {
+    char buffer[1024];
+    char *dynamic_string = NULL;
+    int len;
+
+    printf("Enter a line of text (including spaces):\n");
+
+    if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+        printf("Error reading input.\n");
+        return 1;
+    }
+
+    len = strlen(buffer);
+
+    if (len > 0 && buffer[len - 1] == '\n') {
+        buffer[len - 1] = '\0';
+        len--;
+    }
+
+    if (len == 0) {
+        printf("Empty input.\n");
+        return 0;
+    }
+
+    dynamic_string = (char *)malloc((len + 1) * sizeof(char));
+
+    if (dynamic_string == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    strcpy(dynamic_string, buffer);
+
+    printf("Original string: %s\n", dynamic_string);
+
+    reverseString(dynamic_string);
+
+    printf("Reversed string: %s\n", dynamic_string);
+
+    free(dynamic_string);
+    printf("Memory freed successfully.\n");
+
+    return 0;
+}
+
