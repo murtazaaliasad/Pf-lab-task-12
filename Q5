@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    char buffer1[100];
+    char buffer2[100];
+    char *result_string = NULL;
+    int len1;
+    int len2;
+    int total_len;
+
+    printf("Enter the first string:\n");
+    if (fgets(buffer1, sizeof(buffer1), stdin) == NULL) {
+        return 1;
+    }
+
+    printf("Enter the second string:\n");
+    if (fgets(buffer2, sizeof(buffer2), stdin) == NULL) {
+        return 1;
+    }
+
+    len1 = strlen(buffer1);
+    if (len1 > 0 && buffer1[len1 - 1] == '\n') {
+        buffer1[len1 - 1] = '\0';
+        len1--;
+    }
+
+    len2 = strlen(buffer2);
+    if (len2 > 0 && buffer2[len2 - 1] == '\n') {
+        buffer2[len2 - 1] = '\0';
+        len2--;
+    }
+
+    total_len = len1 + len2;
+    
+    result_string = (char *)malloc((total_len + 1) * sizeof(char));
+
+    if (result_string == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    strcpy(result_string, buffer1);
+    strcat(result_string, buffer2);
+
+    printf("\nConcatenated string:\n%s\n", result_string);
+
+    free(result_string);
+    printf("Memory freed successfully.\n");
+
+    return 0;
+}
